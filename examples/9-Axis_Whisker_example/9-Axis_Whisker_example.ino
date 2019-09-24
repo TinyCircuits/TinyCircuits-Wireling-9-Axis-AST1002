@@ -1,9 +1,9 @@
 /************************************************************************
- * LSM9SD1 WhiskerBoard Demo/Tutorial:
+ * LSM9SD1 9-Axis Whisker Example:
  * This code has the ability to print out all available values from the 
- * 9 axis sensor, but some are commented out in this state so there is not
- * huge jumble of information being spat out. This program shows the basic 
- * methods on interfacing with this sensor to retrieve value readings. 
+ * 9 axis sensor, but some are commented out in this Sketch so as not to 
+ * over-crowd the Serial Monitor. This program shows the basic methods 
+ * on interfacing with this sensor to retrieve value readings. 
  *
  * Hardware by: TinyCircuits
  * Written by: Ben Rose, Laverena Wienclaw, & Brandon Farmer for TinyCircuits
