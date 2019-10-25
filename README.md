@@ -1,7 +1,7 @@
-# TinyCircuits Whisker 9-Axis
+# TinyCircuits Wireling 9-Axis
 # AST1002 Rev1
 
-The design files are located under design_files/ for the TinyCircuits AST1002 Rev 1 PCB. This is a whisker board which measures 9 degrees of freedom (9DOF) and features the ST LSM9DS1 - a system-in-package featuring a 3D digital linear acceleration sensor, a 3D digital angular rate sensor, and a 3D digital magnetic sensor.
+The design files are located under design_files/ for the TinyCircuits AST1002 Rev 1 PCB. This is a Wireling board which measures 9 degrees of freedom (9DOF) and features the ST LSM9DS1 - a system-in-package featuring a 3D digital linear acceleration sensor, a 3D digital angular rate sensor, and a 3D digital magnetic sensor.
 
 Format is in Cadsoft Eagle format - Eagle version 6.2 was used for the original design.
 
