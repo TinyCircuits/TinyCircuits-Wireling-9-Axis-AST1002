@@ -318,5 +318,3 @@ bool RTIMU::IMUGyroBiasValid()
 {
     return m_gyroBiasValid;
 }
-
-

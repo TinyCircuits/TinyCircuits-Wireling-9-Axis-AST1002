@@ -63,6 +63,13 @@
 <layer number="53" name="tGND_GNDA" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="54" name="bGND_GNDA" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="56" name="wert" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="58" name="bCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="59" name="Invisible" color="7" fill="1" visible="no" active="no"/>
+<layer number="61" name="stand" color="7" fill="1" visible="no" active="no"/>
+<layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
+<layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="no" active="no"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="no" active="no"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="no"/>
@@ -71,6 +78,7 @@
 <layer number="96" name="Values" color="7" fill="1" visible="no" active="no"/>
 <layer number="97" name="Info" color="7" fill="1" visible="no" active="no"/>
 <layer number="98" name="Guide" color="6" fill="1" visible="no" active="no"/>
+<layer number="99" name="SpiceOrder" color="5" fill="1" visible="no" active="no"/>
 <layer number="100" name="Muster" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="101" name="Patch_Top" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="102" name="Vscore" color="7" fill="1" visible="yes" active="yes"/>
@@ -84,6 +92,9 @@
 <layer number="110" name="fp0" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="111" name="tGTest" color="4" fill="1" visible="no" active="no"/>
 <layer number="112" name="bGTest" color="1" fill="1" visible="no" active="no"/>
+<layer number="113" name="HENWAY_PKG" color="12" fill="1" visible="yes" active="yes"/>
+<layer number="114" name="50_Electronics_Plate" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="115" name="henwayRES" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="116" name="Patch_BOT" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="117" name="mPads" color="7" fill="1" visible="no" active="no"/>
 <layer number="118" name="mVias" color="7" fill="1" visible="no" active="no"/>
@@ -121,6 +132,14 @@
 <layer number="150" name="Notes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="151" name="HeatSink" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="152" name="mbDocu" color="7" fill="1" visible="no" active="no"/>
+<layer number="153" name="FabDoc1" color="6" fill="1" visible="no" active="no"/>
+<layer number="154" name="FabDoc2" color="2" fill="1" visible="no" active="no"/>
+<layer number="155" name="FabDoc3" color="7" fill="15" visible="no" active="no"/>
+<layer number="156" name="bCapacitor" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="157" name="tResistor" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="158" name="bResistor" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="159" name="henwayCAP" color="13" fill="1" visible="yes" active="yes"/>
+<layer number="160" name="IDFDebug" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="191" name="mNets" color="7" fill="1" visible="no" active="no"/>
 <layer number="192" name="mBusses" color="7" fill="1" visible="no" active="no"/>
 <layer number="193" name="mPins" color="7" fill="1" visible="no" active="no"/>
@@ -153,6 +172,9 @@
 <layer number="222" name="222bmp" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="223" name="223bmp" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="224" name="224bmp" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="231" name="Eagle3D_PG1" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="232" name="Eagle3D_PG2" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="233" name="Eagle3D_PG3" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="248" name="Housing" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="249" name="Edge" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="250" name="Descript" color="7" fill="1" visible="yes" active="yes"/>
@@ -13342,10 +13364,10 @@
 <wire x1="-1.397" y1="0.508" x2="-1.397" y2="-0.4826" width="0.1016" layer="51"/>
 <wire x1="1.397" y1="0.508" x2="1.397" y2="-0.4826" width="0.1016" layer="51"/>
 </package>
-<package name="JST_SH_5X1">
+<package name="JST_SH_5X1_EDGE">
 <smd name="2" x="-1" y="2.475" dx="1.4" dy="0.6" layer="1" rot="R90"/>
-<smd name="PAD1" x="-3.3" y="-1.325" dx="1.6" dy="1.2" layer="1" rot="R90"/>
-<smd name="PAD2" x="3.3" y="-1.325" dx="1.6" dy="1.2" layer="1" rot="R90"/>
+<smd name="PAD1" x="-3.3" y="-1.225" dx="1.4" dy="0.8" layer="1" roundness="1" rot="R90"/>
+<smd name="PAD2" x="3.3" y="-1.225" dx="1.4" dy="0.8" layer="1" rot="R90"/>
 <smd name="3" x="0" y="2.475" dx="1.4" dy="0.6" layer="1" rot="R90"/>
 <wire x1="-3.5" y1="2.125" x2="3.5" y2="2.125" width="0.127" layer="51"/>
 <wire x1="3.5" y1="2.125" x2="3.5" y2="-2.125" width="0.127" layer="51"/>
@@ -13623,11 +13645,11 @@ design rules under a new name.</description>
 <element name="U$1" library="tinycircuits" package="DOCFIELD-TINYCIRCUITS-PCB" value="" x="34" y="0">
 <attribute name="NO_BOM" value="TRUE" x="34" y="0" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C1" library="tinycircuits" package="C0603" value="10uF" x="15.7" y="15.7" rot="R90">
-<attribute name="PARTNO" value="AS-ITM-00002" x="15.7" y="15.7" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="VALUE" value="10uF" x="15.7" y="15.7" size="1.778" layer="27" rot="R90" display="off"/>
+<element name="C1" library="tinycircuits" package="C0603" value="4.7uF" x="15.7" y="15.7" rot="R90">
+<attribute name="PARTNO" value="AS-ITM-00088" x="15.7" y="15.7" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="VALUE" value="4.7uF" x="15.7" y="15.7" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="J1" library="tinycircuits" package="JST_SH_5X1" value="SM05B" x="20" y="12.125">
+<element name="J1" library="tinycircuits" package="JST_SH_5X1_EDGE" value="SM05B" x="20" y="12.125">
 <attribute name="PARTNO" value="AS-ITM-00340" x="20" y="12.125" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" value="SM05B" x="20" y="12.125" size="1.778" layer="27" display="off"/>
 <attribute name="PNPROTATION" value="180" x="20" y="12.125" size="1.778" layer="27" display="off"/>

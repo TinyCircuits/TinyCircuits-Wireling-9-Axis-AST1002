@@ -1,5 +1,5 @@
 /************************************************************************
- * LSM9SD1 9-Axis Whisker Example:
+ * LSM9SD1 9-Axis Wireling Example:
  * This code has the ability to print out all available values from the 
  * 9 axis sensor, but some are commented out in this Sketch so as not to 
  * over-crowd the Serial Monitor. This program shows the basic methods 
@@ -139,7 +139,7 @@ void loop() {
   }
 }
 
-// **This function is necessary for all Whisker boards attached through an Adapter board**
+// **This function is necessary for all Wireling boards attached through an Adapter board**
 // Selects the correct address of the port being used in the Adapter board
 void selectPort(int port) {
   Wire.beginTransmission(0x70);
