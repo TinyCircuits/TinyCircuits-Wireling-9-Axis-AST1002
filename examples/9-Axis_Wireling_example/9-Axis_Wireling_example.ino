@@ -6,23 +6,19 @@
  * on interfacing with this sensor to retrieve value readings. 
  *
  * Hardware by: TinyCircuits
- * Written by: Ben Rose, Laverena Wienclaw, & Brandon Farmer for TinyCircuits
+ * Written by: Ben Rose, Lavérena Wienclaw, & Brandon Farmer for TinyCircuits
  *
- * Initiated: Mon. 11/20/2017 
- * Updated: Tue. 07/03/2018
+ * Initiated: 11/20/2017 
+ * Updated: 12/06/2019
  ************************************************************************/
 
 #include <Wire.h>            // For I2C connection
-#include <TinyScreen.h>      // For the TinyScreen+
+#include <Wireling.h>        // For Wireling Interfacing
 
 // For the communication with the LSM9DS1
 #include "RTIMUSettings.h"    
 #include "RTIMU.h"
 #include "RTFusionRTQF.h"
-
-// TinyScreen+ variables
-TinyScreen display = TinyScreen(TinyScreenPlus);
-int background = TS_16b_Black;
 
 #ifndef ARDUINO_ARCH_SAMD
 #include <EEPROM.h>
@@ -42,36 +38,36 @@ RTVector3 gyroData;
 RTVector3 compassData;
 RTVector3 fusionData; 
 
+// Make Serial Monitor compatible for all TinyCircuits processors
+#if defined(ARDUINO_ARCH_AVR)
+  #define SerialMonitorInterface Serial
+#elif defined(ARDUINO_ARCH_SAMD)
+  #define SerialMonitorInterface SerialUSB
+#endif
+
 void setup() {
   int errcode;
-  SerialUSB.begin(115200);
-  while (!SerialUSB);
-
+  SerialMonitorInterface.begin(115200);
+  while (!SerialMonitorInterface);
   Wire.begin(); // Begin I2C communication
 
-  // TinyScreen appearance variables
-  display.begin();
-  display.setBrightness(15);
-  display.setFlip(true);
-  display.setCursor(0, 0);
-  display.fontColor(TS_8b_White, TS_8b_Black);
-  display.setFont(thinPixel7_10ptFontInfo);
-  display.print("9-Axis Test");
-
-  selectPort(0); //9-Axis Sensor Port, may differ for you
+  // Initialize Wireling
+  Wireling.begin();
+  Wireling.selectPort(0); //9-Axis Sensor Port, may differ for you
+  delay(100);
 
   imu = RTIMU::createIMU(&settings);        // create the imu object
 
-  SerialUSB.print("ArduinoIMU begin using device "); SerialUSB.println(imu->IMUName());
+  SerialMonitorInterface.print("ArduinoIMU begin using device "); SerialMonitorInterface.println(imu->IMUName());
   if ((errcode = imu->IMUInit()) < 0) {
-    SerialUSB.print("Failed to init IMU: "); SerialUSB.println(errcode);
+    SerialMonitorInterface.print("Failed to init IMU: "); SerialMonitorInterface.println(errcode);
   }
 
   // See line 69 of RTIMU.h for more info on compass calibaration 
   if (imu->getCalibrationValid())
-    SerialUSB.println("Using compass calibration");
+    SerialMonitorInterface.println("Using compass calibration");
   else
-    SerialUSB.println("No valid compass calibration data");
+    SerialMonitorInterface.println("No valid compass calibration data");
 
   lastDisplay = lastRate = millis();
   sampleCount = 0;
@@ -96,12 +92,12 @@ void loop() {
     fusion.newIMUData(imu->getGyro(), imu->getAccel(), imu->getCompass(), imu->getTimestamp());
     sampleCount++;
     if ((delta = now - lastRate) >= 1000) {
-      SerialUSB.print("Sample rate: "); SerialUSB.print(sampleCount);
+      SerialMonitorInterface.print("Sample rate: "); SerialMonitorInterface.print(sampleCount);
       if (imu->IMUGyroBiasValid()) {
-        SerialUSB.println(", gyro bias valid");
+        SerialMonitorInterface.println(", gyro bias valid");
       }
       else {
-        SerialUSB.println(", calculating gyro bias - don't move IMU!!");
+        SerialMonitorInterface.println(", calculating gyro bias - don't move IMU!!");
       }
 
       sampleCount = 0;
@@ -117,106 +113,35 @@ void loop() {
       compassData = imu->getCompass();
       fusionData = fusion.getFusionPose();
 
-      // Acceleration data
-      displayScreenAxis("Accel:", accelData.x(), accelData.y(), accelData.z()); 
       displayAxis("Accel:", accelData.x(), accelData.y(), accelData.z());         
 
 // The following data is commented out for easy reading and you can uncomment it all by 
 // highlighting it and using "'Ctrl' + '/'" for windows and "'COMMAND' + '/'" for Mac
 //      // Gyro data
-//      displayScreenAxis("Gyro:", gyroData.x(), gyroData.y(), gyroData.z()); 
 //      displayAxis("Gyro:", gyroData.x(), gyroData.y(), gyroData.z());       
 //
-//      // Compass data
-//      displayScreenAxis("Mag:", compassData.x(), compassData.y(), compassData.z());   
+//      // Compass data  
 //      displayAxis("Mag:", compassData.x(), compassData.y(), compassData.z());    
 //
 //      // Fused output
-//      displayScreenDegrees("Pose:", fusionData.x(), fusionData.y(), fusionData.z());
 //      displayDegrees("Pose:", fusionData.x(), fusionData.y(), fusionData.z());      
-      SerialUSB.println();   
+      SerialMonitorInterface.println();   
     }
   }
 }
 
-// **This function is necessary for all Wireling boards attached through an Adapter board**
-// Selects the correct address of the port being used in the Adapter board
-void selectPort(int port) {
-  Wire.beginTransmission(0x70);
-  Wire.write(0x04 + port);
-  Wire.endTransmission();
-}
-
 // Prints out pieces of different radian axis data to Serial Monitor
 void displayAxis(const char *label, float x, float y, float z) {
-  SerialUSB.print(label);
-  SerialUSB.print(" x:"); SerialUSB.print(x);
-  SerialUSB.print(" y:"); SerialUSB.print(y);
-  SerialUSB.print(" z:"); SerialUSB.print(z);
+  SerialMonitorInterface.print(label);
+  SerialMonitorInterface.print(" x:"); SerialMonitorInterface.print(x);
+  SerialMonitorInterface.print(" y:"); SerialMonitorInterface.print(y);
+  SerialMonitorInterface.print(" z:"); SerialMonitorInterface.print(z);
 }
 
 // Converts axis data from radians to degrees and prints values to Serial Monitor
 void displayDegrees(const char *label, float x, float y, float z) {
-  SerialUSB.print(label);
-  SerialUSB.print(" x:"); SerialUSB.print(x * RTMATH_RAD_TO_DEGREE);
-  SerialUSB.print(" y:"); SerialUSB.print(y * RTMATH_RAD_TO_DEGREE);
-  SerialUSB.print(" z:"); SerialUSB.print(z * RTMATH_RAD_TO_DEGREE);
-}
-
-// Prints out pieces of different radian axis data to TinyScreen+
-void displayScreenAxis(const char *label, float x, float y, float z) {
-  // This will make the screen look a little unsteady but is needed in order
-  // to clear old values 
-  display.clearScreen();
-
-  display.setCursor(0, 0);
-  display.fontColor(TS_8b_White, TS_8b_Black);
-  display.print("9-Axis Test");
-  
-  display.setCursor(0, 16);
-  display.print(label); 
-
-  display.fontColor(TS_8b_Red, background);
-  display.setCursor(0, 28);
-  display.print("X = ");
-  display.print(x);
-
-  display.fontColor(TS_8b_Green, background);
-  display.setCursor(0, 40);
-  display.print("Y = ");
-  display.print(y);
-
-  display.fontColor(TS_8b_Blue, background);
-  display.setCursor(0, 52);
-  display.print("Z = ");
-  display.print(z);
-}
-
-// Converts axis data from radians to degrees and prints values to TinyScreen+
-void displayScreenDegrees(const char *label, float x, float y, float z) {
-   // This will make the screen look a little unsteady but is needed in order
-  // to clear old values 
-  display.clearScreen();
-
-  display.setCursor(0, 0);
-  display.fontColor(TS_8b_White, TS_8b_Black);
-  display.print("9-Axis Test"); 
-  
-  display.setCursor(0, 16);
-  display.print(label);
-
-  display.fontColor(TS_8b_Red, background);
-  display.setCursor(0, 28);
-  display.print("X = ");
-  display.print(x * RTMATH_RAD_TO_DEGREE);
-
-  display.fontColor(TS_8b_Green, background);
-  display.setCursor(0, 40);
-  display.print("Y = ");
-  display.print(y * RTMATH_RAD_TO_DEGREE);
-
-  display.fontColor(TS_8b_Blue, background);
-  display.setCursor(0, 52);
-  display.print("Z = ");
-  display.print(z * RTMATH_RAD_TO_DEGREE);
+  SerialMonitorInterface.print(label);
+  SerialMonitorInterface.print(" x:"); SerialMonitorInterface.print(x * RTMATH_RAD_TO_DEGREE);
+  SerialMonitorInterface.print(" y:"); SerialMonitorInterface.print(y * RTMATH_RAD_TO_DEGREE);
+  SerialMonitorInterface.print(" z:"); SerialMonitorInterface.print(z * RTMATH_RAD_TO_DEGREE);
 }
