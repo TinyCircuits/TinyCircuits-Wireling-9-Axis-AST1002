@@ -116,7 +116,7 @@ void loop() {
       displayAxis("Accel:", accelData.x(), accelData.y(), accelData.z());         
 
 // The following data is commented out for easy reading and you can uncomment it all by 
-// highlighting it and using "'Ctrl' + '/'" for windows and "'COMMAND' + '/'" for Mac
+// highlighting it and using "'Ctrl' + '/'" for windows or "'COMMAND' + '/'" for Mac
 //      // Gyro data
 //      displayAxis("Gyro:", gyroData.x(), gyroData.y(), gyroData.z());       
 //
